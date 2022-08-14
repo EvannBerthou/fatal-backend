@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   get '/users', to: 'user#home'
   get '/logged_in', to: 'user#logged_in?'
 
-  resources :qcm, only: default_actions
+  resources :qcm, only: default_actions do
+    get :generate, on: :member
+  end
   resources :question, only: default_actions
   resources :reponse, only: default_actions
   resources :etudiant, only: default_actions

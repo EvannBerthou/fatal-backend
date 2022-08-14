@@ -29,6 +29,10 @@ class QcmController < ApplicationController
     Qcm.destroy(params[:id])
   end
 
+  def generate
+    send_file('README.md')
+  end
+
   private
 
   def get_qcm(id)
