@@ -10,7 +10,7 @@ default: &default
   timeout: 5000
 
 development:
-  url: postgrsql://krapo.pro:5001/fatal_db_dev
+  url: postgresql://krapo.pro:5001/fatal_db_dev
 
 
 # Warning: The database defined as "test" will be erased and
