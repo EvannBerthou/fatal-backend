@@ -1,4 +1,4 @@
-FROM ruby:2.7.0
+FROM ruby:3.0.2
 RUN apt-get update -qq
 RUN mkdir /home/fatal
 ADD ./ /home/fatal
