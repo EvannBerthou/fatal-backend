@@ -12,6 +12,7 @@ default: &default
   password: F@T@LB@CK3ND2022*
 
 development:
+  <<: *default
   url: postgresql://krapo.pro:5001/fatal_db_dev
 
 
@@ -19,8 +20,10 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
+  <<: *default
   url: postgresql://krapo.pro:5001/fatal_db_test
 
 
 production:
+  <<: *default
   url: postgresql://krapo.pro:5001/fatal_db_dev
