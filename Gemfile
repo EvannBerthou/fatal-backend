@@ -31,6 +31,7 @@ gem "jbuilder"
 # Libs customs
 
 gem 'devise'
+gem 'pg'
 
 
 
