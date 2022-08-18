@@ -9,7 +9,7 @@ RUN ls -la
 
 
 RUN bundle install
-RUN rake db:migrate
+RUN rake db:exists && rake db:migrate || rake db:setup
 ENTRYPOINT ["rails"]
 CMD ["s","-b","0.0.0.0"]
 EXPOSE 3000
