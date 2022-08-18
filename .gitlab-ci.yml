@@ -1,0 +1,27 @@
+stages :
+  - build
+  - deploy
+before_script:
+  - docker info
+  
+variables:
+  DOCKER_HOST: tcp://172.19.0.1:2375
+
+build_image:
+  stage: build
+  tags:
+    - docker-build
+  script:
+    - ls -la
+    - docker build -t fatal_backend:latest .
+
+deploy_docker:
+  stage: deploy
+  tags:
+    - docker-build
+
+  before_script:
+    - docker rm -f fatal_backend
+  script:
+    - docker run -d --name fatal_backend -p 3030:3000 fatal_backend:latest 
+  
