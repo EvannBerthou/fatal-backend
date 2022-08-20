@@ -6,7 +6,7 @@ class QcmController < ApplicationController
 
   def show
     puts current_user.inspect
-    render json: get_qcm(params[:id])
+    render json: get_qcm(params[:id]), include: [:questions]
   end
 
   def create
@@ -36,7 +36,8 @@ class QcmController < ApplicationController
   private
 
   def get_qcm(id)
-    qcm = Qcm.find_by(id: id)
+    qcm = Qcm.includes(:questions).find_by(id: id)
+
     raise 'Le QCM n\'exsite pas' if qcm.nil?
     raise 'Vous n\'êtes pas le propriétaire du QCM' if qcm.user_id != current_user.id
 
