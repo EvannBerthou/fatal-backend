@@ -1,12 +1,12 @@
-class QcmController < ApplicationController
-  # TODO: Temporaire, permet de pouvoir faire des requêts directement à l'API
-  # tant qu'on est pas encore ne mode API ONLY
-  skip_before_action :verify_authenticity_token
+class QcmsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    render json: get_all_qcms_of_user
+  end
+
   def show
-    puts current_user.inspect
-    render json: get_qcm(params[:id]), include: [:questions]
+    render json: get_qcm(params[:id])
   end
 
   def create
@@ -34,6 +34,10 @@ class QcmController < ApplicationController
   end
 
   private
+
+  def get_all_qcms_of_user
+    Qcm.includes(:questions).where(user_id: current_user.id)
+  end
 
   def get_qcm(id)
     qcm = Qcm.includes(:questions).find_by(id: id)
