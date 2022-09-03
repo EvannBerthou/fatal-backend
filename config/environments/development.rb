@@ -9,7 +9,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Authorize connexions from the right url
-  config.hosts = ['back.fatal.krapo.pro', 'localhost']
+  config.hosts = ['back.fatal.krapo.pro', 'localhost', 'localhost:4200']
 
   # Do not eager load code on boot.
   config.eager_load = false
