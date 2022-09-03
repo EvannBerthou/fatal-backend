@@ -1,6 +1,7 @@
 default_actions = %i[show create update destroy]
 Rails.application.routes.draw do
-  devise_for :users
+  mount_devise_token_auth_for 'User', at: 'auth'
+
   get '/users', to: 'user#home'
   get '/logged_in', to: 'user#logged_in?'
 
