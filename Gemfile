@@ -32,7 +32,8 @@ gem "jbuilder"
 
 gem 'devise'
 gem 'pg'
-
+gem 'rack-cors'
+gem 'devise_token_auth', '>= 1.2.0', git: "https://github.com/lynndylanhurley/devise_token_auth"
 
 
 # Use Redis adapter to run Action Cable in production
