@@ -61,11 +61,10 @@ class QcmsController < ApplicationController
     texte += "PaperSize: A4\n"
     texte += "Lang: FR\n"
     texte += "Title :#{qcm.titre}\n\n\n"
-    texte += "Presentation: #{qcm.entete}\n"
+    texte += "Presentation: #{qcm.entete}\n\n"
 
     qcm.questions.each do |question|
-      texte+= "* #{question.texte}\n"
-      texte+= "- A\n+ B\n"
+      texte+= question.toTxt() + "\n"
     end
 
 
