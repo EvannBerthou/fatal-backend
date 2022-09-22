@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_29_205347) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_22_191156) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +36,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_29_205347) do
     t.boolean "right"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "typedequestion", default: 0
+  end
+
+  create_table "reponses", force: :cascade do |t|
+    t.bigint "question_id"
+    t.string "texte"
+    t.boolean "isRight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_reponses_on_question_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -71,4 +81,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_29_205347) do
   add_foreign_key "qcms", "users"
   add_foreign_key "qcms_questions", "qcms"
   add_foreign_key "qcms_questions", "questions"
+  add_foreign_key "reponses", "questions"
 end
