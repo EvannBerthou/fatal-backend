@@ -5,8 +5,7 @@ class Question < ApplicationRecord
   def toTxt()
     txtofq = "* " + texte + "\n";
     reponses.each do |reponse|
-      reponse.isRight ? txtofq += "+ " : txtofq += "- "
-      txtofq += reponse.texte + "\n"
+      txtofq += (reponse.isRight ? txtofq += "+ " : txtofq += "- ") + reponse.texte + "\n"
     end
     txtofq
   end
