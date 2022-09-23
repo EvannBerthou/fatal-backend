@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_23_130857) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_23_184145) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_23_130857) do
     t.bigint "question_id"
     t.index ["categorie_id"], name: "index_categories_questions_on_categorie_id"
     t.index ["question_id"], name: "index_categories_questions_on_question_id"
+  end
+
+  create_table "options", force: :cascade do |t|
+    t.bigint "question_id"
+    t.integer "typedoption", default: 0, null: false
+    t.string "valeur"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_options_on_question_id"
   end
 
   create_table "qcms", force: :cascade do |t|
@@ -94,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_23_130857) do
   end
 
   add_foreign_key "categories", "qcms"
+  add_foreign_key "options", "questions"
   add_foreign_key "qcms", "users"
   add_foreign_key "qcms_questions", "qcms"
   add_foreign_key "qcms_questions", "questions"
