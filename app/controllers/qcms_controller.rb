@@ -51,9 +51,7 @@ class QcmsController < ApplicationController
   end
 
   def generate_qcm_txt(id)
-    qcm = Qcm.includes(:questions).find_by(id: id)
-    raise 'Le QCM n\'exsite pas' if qcm.nil?
-    raise 'Vous n\'êtes pas le propriétaire du QCM' if qcm.user_id != current_user.id
+    qcm = get_qcm(id)
   
     generating_command = "auto-multiple-choice prepare --mode s --prefix . #{qcm.id}.txt     --out-sujet DOC-sujet.pdf     --out-corrige DOC-corrige.pdf     --out-calage DOC-calage.xy --filter plain --data ./data"
 
