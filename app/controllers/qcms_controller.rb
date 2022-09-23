@@ -2,7 +2,7 @@ class QcmsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    render json: get_all_qcms_of_user
+    render json: get_all_qcms_of_user, :include => [:categories => {:include => :questions}]
   end
 
 
@@ -43,6 +43,7 @@ class QcmsController < ApplicationController
 
   def get_qcm(id)
     qcm = Qcm.includes(:questions).find_by(id: id)
+
     raise 'Le QCM n\'exsite pas' if qcm.nil?
     raise 'Vous n\'êtes pas le propriétaire du QCM' if qcm.user_id != current_user.id
 
