@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_22_191156) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_23_130857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.bigint "qcm_id"
+    t.string "texte"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["qcm_id"], name: "index_categories_on_qcm_id"
+  end
+
+  create_table "categories_questions", id: false, force: :cascade do |t|
+    t.bigint "categorie_id"
+    t.bigint "question_id"
+    t.index ["categorie_id"], name: "index_categories_questions_on_categorie_id"
+    t.index ["question_id"], name: "index_categories_questions_on_question_id"
+  end
 
   create_table "qcms", force: :cascade do |t|
     t.string "entete"
@@ -78,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_22_191156) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "categories", "qcms"
   add_foreign_key "qcms", "users"
   add_foreign_key "qcms_questions", "qcms"
   add_foreign_key "qcms_questions", "questions"
