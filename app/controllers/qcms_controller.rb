@@ -6,7 +6,7 @@ class QcmsController < ApplicationController
   end
 
   def show
-    render json: get_qcm(params[:id]), include: [categories: { include: :questions }]
+    render json: get_qcm(params[:id]), include: [categories: { include: [questions: {include: :reponses} ] }]
   end
 
   def create
