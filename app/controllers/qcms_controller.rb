@@ -2,12 +2,11 @@ class QcmsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    render json: get_all_qcms_of_user, :include => [:categories => {:include => :questions}]
+    render json: get_all_qcms_of_user, include: [categories: { include: :questions }]
   end
 
-
   def show
-   render json: get_qcm(params[:id])
+    render json: get_qcm(params[:id]), include: [categories: { include: :questions }]
   end
 
   def create
@@ -38,7 +37,7 @@ class QcmsController < ApplicationController
   private
 
   def get_all_qcms_of_user
-    Qcm.includes(:questions).where(user_id: current_user.id) #.to_json(:include => :questions)
+    Qcm.includes(:questions).where(user_id: current_user.id)
   end
 
   def get_qcm(id)
@@ -52,14 +51,13 @@ class QcmsController < ApplicationController
 
   def generate_qcm_txt(id)
     qcm = get_qcm(id)
-  
+
     generating_command = "auto-multiple-choice prepare --mode s --prefix . #{qcm.id}.txt     --out-sujet DOC-sujet.pdf     --out-corrige DOC-corrige.pdf     --out-calage DOC-calage.xy --filter plain --data ./data"
 
-    texte = qcm.toTxt()
+    texte = qcm.toTxt
 
     `mkdir MC-Projects/#{qcm.id} MC-Projects/#{qcm.id}/data`
     `echo "#{texte}" > MC-Projects/#{qcm.id}/#{qcm.id}.txt`
-    `cd MC-Projects/#{qcm.id}/ && #{generating_command} >&2` 
-
+    `cd MC-Projects/#{qcm.id}/ && #{generating_command} >&2`
   end
 end
