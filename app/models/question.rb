@@ -6,10 +6,31 @@ class Question < ApplicationRecord
   enum :typedequestion, [ :multiple, :ouverte, :numerique ]
 
   def toTxt()
-    txtofq = "* " + texte + "\n";
+    txtofq = "#{questionPrefix()}" + texte + "\n";
     reponses.each do |reponse|
-      txtofq += (reponse.isRight ? txtofq += "+ " : txtofq += "- ") + reponse.texte + "\n"
+      txtofq += (reponse.isRight ? "+" : "-") + "{#{reponse.points}} " + reponse.texte + "\n"
     end
-    txtofq
+    return txtofq
+  end
+
+  def questionPrefix()
+    prefix = ""
+    case typedequestion
+      when "multiple"
+        if getRightAnswerCount() > 1
+          prefix = "**"
+        else
+          prefix = "*"
+        end
+      when "ouverte"
+        prefix = "*<lines=4>"
+      when "numerique"
+    end
+    prefix
+  end
+
+  def getRightAnswerCount()
+    print("ANSWER COUNT : #{reponses.count {|reponse| reponse.isRight}}")
+    reponses.count {|reponse| reponse.isRight}
   end
 end
