@@ -23,14 +23,19 @@ class Question < ApplicationRecord
           prefix = "*"
         end
       when "ouverte"
-        prefix = "*<lines=4>"
+        getLinesOpenQuestion()
+        prefix = "*<lines=#{getLinesOpenQuestion}>"
       when "numerique"
     end
     prefix
   end
 
   def getRightAnswerCount()
-    print("ANSWER COUNT : #{reponses.count {|reponse| reponse.isRight}}")
     reponses.count {|reponse| reponse.isRight}
+  end
+
+  def getLinesOpenQuestion()
+    nbligne = options.select {|option| option.typedoption = 1} [0]
+    nbligne.valeur
   end
 end
