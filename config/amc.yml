@@ -1,0 +1,8 @@
+default: &default
+  save_folder: test
+
+development:
+  <<: *default
+
+production:
+  <<: *default
