@@ -11,6 +11,6 @@ RUN ls -la
 RUN bundle install
 RUN rails db:prepare
 RUN export SECRET_KEY_BASE=/data/secret
-ENTRYPOINT ["rails -e production"]
-CMD ["s","-b","0.0.0.0"]
+ENTRYPOINT ["rails"]
+CMD ["s","-e","production","-b","0.0.0.0"]
 EXPOSE 3000
