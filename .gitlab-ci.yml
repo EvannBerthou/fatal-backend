@@ -21,7 +21,7 @@ deploy_docker:
     - docker-build
   environment:
     name: production
-    url: https://back.fatal.krapo.pro
+    url: http://back.fatal.krapo.pro
 
 
   before_script:
