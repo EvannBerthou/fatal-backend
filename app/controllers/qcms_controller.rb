@@ -55,9 +55,8 @@ class QcmsController < ApplicationController
     generating_command = "auto-multiple-choice prepare --mode s --prefix . #{qcm.id}.txt     --out-sujet DOC-sujet.pdf     --out-corrige DOC-corrige.pdf     --out-calage DOC-calage.xy --filter plain --data ./data"
 
     texte = qcm.toTxt
-
-    `mkdir MC-Projects/#{qcm.id} MC-Projects/#{qcm.id}/data`
-    `echo "#{texte}" > MC-Projects/#{qcm.id}/#{qcm.id}.txt`
-    `cd MC-Projects/#{qcm.id}/ && #{generating_command} >&2`
+    `mkdir #{Rails.configuration.amc[:save_folder]}/#{qcm.id} #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/data`
+    `echo "#{texte}" > #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/#{qcm.id}.txt`
+    `cd #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/ && #{generating_command} >&2`
   end
 end

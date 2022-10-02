@@ -1,8 +1,9 @@
 default: &default
-  save_folder: test
+  save_folder: MC-Projects
 
 development:
   <<: *default
 
 production:
   <<: *default
+  save_folder: /data/MC-Projects
