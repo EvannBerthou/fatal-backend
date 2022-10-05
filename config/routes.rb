@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
   resources :question, only: default_actions
   resources :reponse, only: default_actions
+  resources :PDF, only: default_actions, controller: 'pdf' 
   resources :etudiant, only: default_actions
   resource :admin
 end
