@@ -1,17 +1,18 @@
 module BashModule
     private
+    save_folder = Rails.configuration.amc[:save_folder]
 
     def AMC_create_dir(qcm)
-        `mkdir #{Rails.configuration.amc[:save_folder]}/#{qcm.id} #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/data`
+        `mkdir #{save_folder}/#{qcm.id} #{save_folder}/#{qcm.id}/data`
     end
 
     def AMC_write_qcm_file(qcm)
       `echo "#{qcm.toTxt}" \
-      > #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/#{qcm.id}.txt`
+      > #{save_folder}/#{qcm.id}/#{qcm.id}.txt`
     end
 
     def AMC_generation(qcm)
-        `cd #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/ && auto-multiple-choice prepare --mode s \
+        `cd #{save_folder}/#{qcm.id}/ && auto-multiple-choice prepare --mode s \
         --prefix . \
         #{qcm.id}.txt \
         --out-sujet DOC-sujet.pdf \
@@ -22,7 +23,7 @@ module BashModule
     end
 
     def AMC_move_pdf_to_downloadable_folder(qcm)
-        `mv #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/DOC-sujet.pdf \
-        #{Rails.configuration.amc[:pdf_folder]}/#{qcm.id}.pdf`
+        `mv #{save_folder}/#{qcm.id}/DOC-sujet.pdf \
+        #{save_folder}/#{qcm.id}.pdf`
     end
 end
