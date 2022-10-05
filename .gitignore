@@ -37,4 +37,7 @@
 # Ignore AMC local projects
 /MC-Projects
 
+#Ignore PDFs
+/PDF
+
 tags
