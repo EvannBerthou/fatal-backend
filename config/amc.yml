@@ -1,5 +1,6 @@
 default: &default
   save_folder: MC-Projects
+  pdf_folder: PDF
 
 development:
   <<: *default
@@ -7,3 +8,4 @@ development:
 production:
   <<: *default
   save_folder: /data/MC-Projects
+  pdf_folder: /data/pdf
