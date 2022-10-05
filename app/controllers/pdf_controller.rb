@@ -1,5 +1,6 @@
 require 'qcms_module'
 class PdfController < ApplicationController
+    before_action :authenticate_user!
     include QcmsModule
 
     def show
