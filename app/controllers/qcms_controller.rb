@@ -1,8 +1,8 @@
+require 'qcms_module'
 class QcmsController < ApplicationController
-  before_action :authenticate_user!
-
+  include QcmsModule
   def index
-    render json: get_all_qcms_of_user, include: [categories: { include: :questions }]
+    render json: get_all_qcms_of_user(), include: [categories: { include: :questions }]
   end
 
   def show
@@ -30,33 +30,6 @@ class QcmsController < ApplicationController
   end
 
   def generate
-    generate_qcm_txt(params[:id])
-    render json: get_qcm(params[:id])
-  end
-
-  private
-
-  def get_all_qcms_of_user
-    Qcm.includes(:questions).where(user_id: current_user.id)
-  end
-
-  def get_qcm(id)
-    qcm = Qcm.includes(:questions).find_by(id: id)
-
-    raise 'Le QCM n\'exsite pas' if qcm.nil?
-    raise 'Vous n\'êtes pas le propriétaire du QCM' if qcm.user_id != current_user.id
-
-    qcm
-  end
-
-  def generate_qcm_txt(id)
-    qcm = get_qcm(id)
-
-    generating_command = "auto-multiple-choice prepare --mode s --prefix . #{qcm.id}.txt     --out-sujet DOC-sujet.pdf     --out-corrige DOC-corrige.pdf     --out-calage DOC-calage.xy --filter plain --data ./data"
-
-    texte = qcm.toTxt
-    `mkdir #{Rails.configuration.amc[:save_folder]}/#{qcm.id} #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/data`
-    `echo "#{texte}" > #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/#{qcm.id}.txt`
-    `cd #{Rails.configuration.amc[:save_folder]}/#{qcm.id}/ && #{generating_command} >&2`
+    render json: generate_qcm_txt(params[:id])
   end
 end
