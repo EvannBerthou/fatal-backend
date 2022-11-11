@@ -9,6 +9,6 @@ RUN ls -la
 
 
 RUN bundle install
-RUN rails db:prepare
+RUN rails db:prepare --trace
 ENTRYPOINT ["sh","/data/start.sh"]
 EXPOSE 3000
