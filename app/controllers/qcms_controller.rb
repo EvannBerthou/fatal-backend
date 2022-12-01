@@ -2,6 +2,7 @@ require 'qcms_module'
 class QcmsController < ApplicationController
   before_action :authenticate_user!
   include QcmsModule
+  
   def index
     render json: get_all_qcms_of_user(), include: [categories: { include: :questions }]
   end
@@ -32,5 +33,9 @@ class QcmsController < ApplicationController
 
   def generate
     render json: generate_qcm_txt(params[:id])
+  end
+
+  def recent
+    render json: get_most_recent_qcms(), include: [categories: { include: :questions }]
   end
 end

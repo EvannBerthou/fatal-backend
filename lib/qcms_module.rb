@@ -15,6 +15,10 @@ module QcmsModule
     def get_all_qcms_of_user()
       Qcm.includes(:questions).where(user_id: current_user.id)
     end
+
+    def get_most_recent_qcms()      
+      Qcm.limit(12).includes(:questions).where(user_id: current_user.id).order(updated_at: :desc)
+    end
   
     def generate_qcm_txt(id)
       qcm = get_qcm(id)

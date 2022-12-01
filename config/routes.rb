@@ -6,8 +6,14 @@ Rails.application.routes.draw do
   get '/logged_in', to: 'user#logged_in?'
 
   resources :qcms, only: default_actions do
-    get :generate, on: :member
+    member do 
+      get :generate
+    end
+    collection do
+      get :recent
+    end
   end
+
   resources :question, only: default_actions
   resources :reponse, only: default_actions
   resources :PDF, only: default_actions, controller: 'pdf' 
