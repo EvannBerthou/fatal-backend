@@ -5,6 +5,8 @@ class Question < ApplicationRecord
   has_many :options
   enum :typedequestion, [ :multiple, :ouverte, :numerique ]
 
+  accepts_nested_attributes_for :reponses
+
   def toTxt()
     txtofq = "#{questionPrefix()}" + texte + "\n";
     reponses.each do |reponse|

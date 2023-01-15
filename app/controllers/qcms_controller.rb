@@ -2,7 +2,7 @@ require 'qcms_module'
 class QcmsController < ApplicationController
   before_action :authenticate_user!
   include QcmsModule
-  
+
   def index
     render json: get_all_qcms_of_user(), include: [categories: { include: :questions }]
   end
@@ -20,10 +20,8 @@ class QcmsController < ApplicationController
   end
 
   def update
-    params.permit!
     qcm = get_qcm(params[:id])
-    raise 'Error lors de la mise à jour des attributes' unless qcm.update(params[:qcm])
-
+    raise 'Error lors de la mise à jour des attributes' unless qcm.update(qcm_param)
     render json: qcm
   end
 
@@ -37,5 +35,26 @@ class QcmsController < ApplicationController
 
   def recent
     render json: get_most_recent_qcms(), include: [categories: { include: :questions }]
+  end
+
+  private
+
+  def qcm_param
+    # On filtre les paramètres qui sont white-list. Uniquement ceux qui indispensable à l'update
+    permitted = params.require(:qcm).permit(:id, :entete, :is_randomized, :titre, categories: [
+      :id, :qcm_id, :texte, questions: [
+        :id, :texte, :typedequestion, reponses: [:id, :texte, :points, :isRight]
+      ]
+    ]).to_h
+
+    # Il faut renommer les clés pour que RoR puisse les utiliser
+    permitted.deep_transform_keys do |key|
+      case key
+      when 'categories' then 'categories_attributes'
+      when 'questions' then 'questions_attributes'
+      when 'reponses' then 'reponses_attributes'
+      else key
+      end
+    end
   end
 end
